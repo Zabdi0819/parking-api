@@ -5,7 +5,6 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13%2B-blue)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-✓-blue)](https://www.docker.com/)
 [![JWT Auth](https://img.shields.io/badge/JWT-Auth-orange)](https://jwt.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A complete parking management solution with REST API, authentication, and business rule enforcement.
 
@@ -48,3 +47,16 @@ cp .env.example .env
 
 # Build and start containers
 docker-compose up --build
+```
+
+## 📚 API Documentation
+
+### Endpoints
+
+| Endpoint                       | Method | Description                         | Auth Required |
+|--------------------------------|--------|-------------------------------------|---------------|
+| /api/v1/auth/login             | POST   | Get JWT token                       | No            |
+| /api/v1/parkings               | GET    | List parkings (paginated)           | Yes           |
+| /api/v1/parkings               | POST   | Create new parking                  | Yes           |
+| /api/v1/parkings/:id           | PATCH  | Update parking (contact/spots only) | Yes           |
+| /api/v1/check-in               | POST   | Validate parking access             | Yes           |

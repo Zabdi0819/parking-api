@@ -14,6 +14,8 @@ services:
       - DB_NAME=parking
     depends_on:
       - db
+    volumes:
+      - .:/app  # Montamos todo el proyecto en /app dentro del contenedor
 
   db:
     image: postgres:13-alpine
