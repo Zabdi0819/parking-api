@@ -8,7 +8,6 @@ const parkingRepository = new ParkingRepository();
 const parkingService = new ParkingService(parkingRepository);
 const checkInController = new CheckInController(parkingService);
 
-// Asegúrate de que el método checkIn esté correctamente tipado
 router.post('/', (req, res) => checkInController.checkIn(req, res));
 
 export default router;

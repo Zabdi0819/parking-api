@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { ParkingType } from '../entities/parking.entity';
 
-const PHONE_REGEX = /^\+?[0-9][0-9\s\-]{3,20}$/;
+const PHONE_REGEX = /^\+?\d{3,15}$/;
 
 export interface CreateParkingDto {
   name: string;
@@ -21,7 +21,7 @@ export const createParkingSchema = Joi.object<CreateParkingDto>({
     }),
   spots: Joi.number().integer().min(50).max(1500).required(),
   parkingType: Joi.string().valid('public', 'private', 'courtesy').required()
-});
+}).strict();
 
 export interface UpdateParkingDto {
   contact?: string;

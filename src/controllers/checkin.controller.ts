@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { ParkingService } from '../services/parking.service';
 import { ParkingFactory } from '../factories/parking.factory';
-import { ParkingType } from '../entities/parking.entity';
 
 export class CheckInController {
   constructor(private parkingService: ParkingService) {}
