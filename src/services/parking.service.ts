@@ -69,6 +69,9 @@ export class ParkingService {
       parking.spots = updateParkingDto.spots;
     }
 
+    console.log('updateParkingDto');
+    parking.updatedAt = new Date ();
+
     return this.parkingRepository.save(parking);
   }
 
