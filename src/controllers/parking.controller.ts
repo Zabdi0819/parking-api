@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
 import { ParkingService } from '../services/parking.service';
 import { CreateParkingDto, UpdateParkingDto } from '../dtos/parking.dto';
-import { createParkingSchema, updateParkingSchema } from '../dtos/parking.dto'; // Importa los schemas de validación
+import { createParkingSchema, updateParkingSchema } from '../dtos/parking.dto';
 
 export class ParkingController {
   constructor(private parkingService: ParkingService) {}
 
   async createParking(req: Request, res: Response) {
-    // 1. Validación del DTO
     const { error } = createParkingSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ 
@@ -72,7 +71,6 @@ export class ParkingController {
     const { id } = req.params;
     const updateParkingDto: UpdateParkingDto = req.body;
     
-    // Añade esta validación
     const { error } = updateParkingSchema.validate(updateParkingDto);
     if (error) {
         return res.status(400).json({ 

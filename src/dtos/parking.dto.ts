@@ -1,7 +1,6 @@
 import Joi from 'joi';
 import { ParkingType } from '../entities/parking.entity';
 
-// Patrón regex mejorado para teléfonos internacionales
 const PHONE_REGEX = /^\+?[0-9][0-9\s\-]{3,20}$/;
 
 export interface CreateParkingDto {
@@ -18,7 +17,6 @@ export const createParkingSchema = Joi.object<CreateParkingDto>({
     .max(15)
     .pattern(PHONE_REGEX, 'valid phone number')
     .messages({
-      'string.pattern.base': 'Phone number must contain only numbers, spaces, hyphens and optional + prefix',
       'string.max': 'Phone number cannot exceed 15 characters'
     }),
   spots: Joi.number().integer().min(50).max(1500).required(),
@@ -35,8 +33,7 @@ export const updateParkingSchema = Joi.object<UpdateParkingDto>({
     .max(15)
     .pattern(PHONE_REGEX, 'valid phone number')
     .messages({
-      'string.pattern.base': 'Phone number must contain only numbers, spaces, hyphens and optional + prefix',
       'string.max': 'Phone number cannot exceed 15 characters'
     }),
   spots: Joi.number().integer().min(50).max(1500)
-});
+}).strict();
