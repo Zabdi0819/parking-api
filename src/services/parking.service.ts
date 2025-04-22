@@ -7,7 +7,6 @@ export class ParkingService {
   constructor(private parkingRepository: ParkingRepository) {}
 
   async createParking(createParkingDto: CreateParkingDto): Promise<Parking> {
-    // Validar número de cajones
     if (createParkingDto.spots < 50) {
       throw new AppError('Parking is too small. Minimum spots: 50', 400);
     }
@@ -16,13 +15,13 @@ export class ParkingService {
       throw new AppError('Parking is too large. Maximum spots: 1500', 400);
     }
 
-    // Verificar nombre único
+    // Verify unique name
     const existingParking = await this.parkingRepository.findByName(createParkingDto.name);
     if (existingParking) {
       throw new AppError('Parking name already exists', 400);
     }
 
-    // Crear nueva entidad
+    // Create new entity
     const parking = new Parking();
     parking.name = createParkingDto.name;
     parking.contact = createParkingDto.contact;
@@ -57,7 +56,6 @@ export class ParkingService {
       throw new AppError('Parking not found', 404);
     }
 
-    // Solo permitir actualizar contact y spots
     if (updateParkingDto.contact !== undefined) {
       parking.contact = updateParkingDto.contact;
     }
@@ -69,7 +67,6 @@ export class ParkingService {
       parking.spots = updateParkingDto.spots;
     }
 
-    console.log('updateParkingDto');
     parking.updatedAt = new Date ();
 
     return this.parkingRepository.save(parking);

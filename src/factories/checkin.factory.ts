@@ -12,7 +12,7 @@ export class PublicParking implements ParkingValidation {
 
 export class PrivateParking implements ParkingValidation {
   canUserEnter(userType: string) {
-    const day = new Date().getDay(); // 0 (Domingo) a 6 (Sábado)
+    const day = new Date().getDay();
     const isWeekday = day >= 1 && day <= 5;
     
     if (userType !== 'corporate') {
@@ -29,7 +29,7 @@ export class PrivateParking implements ParkingValidation {
 
 export class CourtesyParking implements ParkingValidation {
   canUserEnter(userType: string) {
-    const day = new Date().getDay(); // 0 (Domingo) a 6 (Sábado)
+    const day = new Date().getDay();
     const isWeekend = day === 0 || day === 6;
     
     if (userType !== 'visitor') {
@@ -44,7 +44,7 @@ export class CourtesyParking implements ParkingValidation {
   }
 }
 
-export class ParkingFactory {
+export class CheckInFactory {
   static createParking(parkingType: ParkingType): ParkingValidation {
     switch (parkingType) {
       case ParkingType.PRIVATE:

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ParkingService } from '../services/parking.service';
-import { ParkingFactory } from '../factories/parking.factory';
+import { CheckInFactory } from '../factories/checkin.factory';
 
 export class CheckInController {
   constructor(private parkingService: ParkingService) {}
@@ -15,7 +15,7 @@ export class CheckInController {
         return;
       }
       
-      const parkingValidation = ParkingFactory.createParking(parking.parkingType);
+      const parkingValidation = CheckInFactory.createParking(parking.parkingType);
       const validationResult = parkingValidation.canUserEnter(userType);
       
       if (!validationResult.canEnter) {

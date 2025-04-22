@@ -89,5 +89,5 @@ export class ParkingController {
             res.status(500).json({ message: 'Unknown error occurred' });
         }
     }
-}
+  }
 }
