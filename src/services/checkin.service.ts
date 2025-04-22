@@ -1,8 +1,8 @@
 import { CheckIn } from '../entities/checkin.entity';
+import { User } from '../entities/user.entity';
 import { ParkingService } from './parking.service';
 import { CheckInFactory } from '../factories/checkin.factory';
 import { AppError } from '../utils/error';
-import { Repository } from 'typeorm';
 import { CheckInRepository } from '../repositories/checkin.repository';
 import { CreateCheckInDto } from '../dtos/checkin.dto';
 import { Parking } from '../entities/parking.entity';
@@ -25,6 +25,7 @@ export class CheckInService {
 
     const checkIn = new CheckIn();
     checkIn.parking = parking;
+    checkIn.user =  { id: dto.userId } as User;
     checkIn.userType = dto.userType;
     checkIn.accessGranted = validation.canEnter;
     checkIn.reason = validation.message;

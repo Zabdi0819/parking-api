@@ -1,9 +1,9 @@
 import Joi from 'joi';
 import { UserType } from '../entities/checkin.entity';
-import { User } from '../entities/user.entity';
 
 export interface CreateCheckInDto {
-  parkingId: User['id'];
+  userId: string;
+  parkingId: string;
   userType: UserType;
 }
 
@@ -13,6 +13,7 @@ export const createCheckInSchema = Joi.object<CreateCheckInDto>({
 }).strict();
 
 export interface UpdateParkingDto {
-  parkingId?: User;
+  userId?: string;
+  parkingId?: string;
   userType?: string;
 }
