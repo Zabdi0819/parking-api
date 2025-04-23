@@ -32,6 +32,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
     "helmet": "^8.1.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
@@ -57,5 +59,16 @@
     "supertest": "^7.1.0",
     "ts-jest": "^29.3.2",
     "typescript": "^5.8.3"
+  },
+  "resolutions": {
+    "graphql": "15.8.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "testMatch": ["**/tests/**/*.test.ts"]
   }
 }
