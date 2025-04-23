@@ -55,6 +55,8 @@ describe('Integration test for Corporate user', () => {
           parkingId: privateParkingId,
           userType: UserType.CORPORATE,
         });
+      
+      console.log(response.body);
     
       expect(response.status).toBe(200);
       expect(response.body.message).toBe('Access granted');
@@ -75,6 +77,8 @@ describe('Integration test for Corporate user', () => {
           userType: UserType.CORPORATE,
         });
 
+      console.log(response.body);
+
       expect(response.status).toBe(403);
       expect(response.body.errorCode).toBe('ACCESS_DENIED');
 
@@ -89,7 +93,9 @@ describe('Integration test for Corporate user', () => {
           parkingId: publicParkingId,
           userType: UserType.CORPORATE,
         });
-
+      
+      console.log(response.body);
+      
       expect(response.status).toBe(200);
       expect(response.body.message).toBe('Access granted');
     });
@@ -103,6 +109,8 @@ describe('Integration test for Corporate user', () => {
           userType: UserType.CORPORATE,
         });
 
+      console.log(response.body);
+      
       expect(response.status).toBe(403);
       expect(response.body.errorCode).toBe('ACCESS_DENIED');
     });
