@@ -1,6 +1,6 @@
 import request from 'supertest';
-import app from '../../src/server';
-import { createUser, createParking } from '../utils';
+import app from '../../src/app';
+import { createUser, createParking, resetDate } from '../utils';
 import { UserType } from '../../src/entities/checkin.entity';
 import { ParkingType } from '../../src/entities/parking.entity';
 import { AppError } from '../../src/utils/error';
@@ -37,10 +37,10 @@ describe('Integration test for Provider user', () => {
   });
 
   afterAll(async () => {
-    jest.useRealTimers();
     if (AppDataSource.isInitialized) {
       await AppDataSource.destroy();
     }
+    resetDate();
   });
 
   describe('POST /check-in', () => {
@@ -54,6 +54,7 @@ describe('Integration test for Provider user', () => {
         });
     
       expect(response.status).toBe(200);
+      expect(response.body.status).toBe('success');
       expect(response.body.message).toBe('Access granted');
     });
     
@@ -68,7 +69,9 @@ describe('Integration test for Provider user', () => {
         });
 
       expect(response.status).toBe(403);
+      expect(response.body.status).toBe('error');
       expect(response.body.errorCode).toBe('ACCESS_DENIED');
+      expect(response.body.message).toBe('Only corporate users can enter private parkings');
     });
 
     it('❌ Should NOT allow PROVIDER user to check-in in courtesy parking', async () => {
@@ -81,7 +84,9 @@ describe('Integration test for Provider user', () => {
         });
 
       expect(response.status).toBe(403);
+      expect(response.body.status).toBe('error');
       expect(response.body.errorCode).toBe('ACCESS_DENIED');
+      expect(response.body.message).toBe('Only visitors can enter courtesy parkings');
     });
   });
 });
