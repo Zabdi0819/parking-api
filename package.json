@@ -69,7 +69,6 @@
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     },
-    "testMatch": ["**/tests/**/*.test.ts"],
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
+    "testMatch": ["**/tests/**/*.test.ts"]
   }
 }
