@@ -1,19 +1,17 @@
 import request from 'supertest';
 import app from '../../src/app';
-import { createUser, createParking, resetDate } from '../utils';
+import { createUser, resetDate, initializeTestDB } from '../utils';
 import { UserType } from '../../src/entities/checkin.entity';
 import { ParkingType } from '../../src/entities/parking.entity';
 import { AppError } from '../../src/utils/error';
 import AppDataSource from '../../src/config/data-source';
 
-describe('Integration test for Provider user', () => {
+describe('Integration test for parkings creation', () => {
   let providerToken: string;
   let parkingName: string;
 
   beforeAll(async () => {
-    if (!AppDataSource.isInitialized) {
-        await AppDataSource.initialize();
-    }
+    await initializeTestDB();
 
     parkingName = `Parking-${Date.now()}`;
 

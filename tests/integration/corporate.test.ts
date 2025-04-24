@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../../src/app';
-import { createUser, createParking, resetDate, mockDate } from '../utils';
+import { createUser, createParking, resetDate, mockDate, initializeTestDB } from '../utils';
 import { UserType } from '../../src/entities/checkin.entity';
 import { ParkingType } from '../../src/entities/parking.entity';
 import { AppError } from '../../src/utils/error';
@@ -13,9 +13,7 @@ describe('Integration test for Corporate user', () => {
   let courtesyParkingId: string;
 
   beforeAll(async () => {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
+    await initializeTestDB();
 
     // Create user
     const userName = `corporateUser-${Date.now()}`;
