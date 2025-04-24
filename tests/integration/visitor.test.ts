@@ -1,6 +1,6 @@
 import request from 'supertest';
-import app from '../../src/server';
-import { createUser, createParking } from '../utils';
+import app from '../../src/app';
+import { createUser, createParking, resetDate, mockDate, initializeTestDB } from '../utils';
 import { UserType } from '../../src/entities/checkin.entity';
 import { ParkingType } from '../../src/entities/parking.entity';
 import { AppError } from '../../src/utils/error';
@@ -13,9 +13,7 @@ describe('Integration test for Visitor user', () => {
   let courtesyParkingId: string;
 
   beforeAll(async () => {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
+    await initializeTestDB();
 
     // Create user
     const userName = `VisitorUser-${Date.now()}`;
@@ -40,7 +38,7 @@ describe('Integration test for Visitor user', () => {
     if (AppDataSource.isInitialized) {
       await AppDataSource.destroy();
     }
-    jest.useRealTimers();
+    resetDate();
   });
 
   describe('POST /check-in', () => {
@@ -54,6 +52,7 @@ describe('Integration test for Visitor user', () => {
         });
 
       expect(response.status).toBe(200);
+      expect(response.body.status).toBe('success');
       expect(response.body.message).toBe('Access granted');
     });
 
@@ -67,12 +66,13 @@ describe('Integration test for Visitor user', () => {
         });
     
       expect(response.status).toBe(403);
+      expect(response.body.status).toBe('error');
       expect(response.body.errorCode).toBe('ACCESS_DENIED');
+      expect(response.body.message).toBe('Only corporate users can enter private parkings');
     });
 
     it('❌ Should NOT allow VISITOR user to check-in in courtesy parking on weekdays', async () => {
-      const mockDate = new Date('2025-04-08T10:00:00'); // Tuesday
-      jest.spyOn(global.Date, 'now').mockImplementation(() => mockDate.getTime());
+      mockDate('2025-04-22T10:00:00'); // Tuesday
 
       const response = await request(app)
         .post('/check-in')
@@ -83,14 +83,15 @@ describe('Integration test for Visitor user', () => {
         });
 
       expect(response.status).toBe(403);
+      expect(response.body.status).toBe('error');
       expect(response.body.errorCode).toBe('ACCESS_DENIED');
+      expect(response.body.message).toBe('Courtesy parkings are only available on weekends');
 
-      jest.spyOn(global.Date, 'now').mockRestore();
+      resetDate();
     });
 
     it('✅ Should allow VISITOR user to check-in in courtesy parking on weekends', async () => {
-      const mockDate = new Date('2025-04-06T10:00:00'); // Sunday
-      jest.spyOn(global.Date, 'now').mockImplementation(() => mockDate.getTime());
+      mockDate('2025-04-20T10:00:00'); // Sunday
 
       const response = await request(app)
         .post('/check-in')
@@ -101,9 +102,10 @@ describe('Integration test for Visitor user', () => {
         });
 
       expect(response.status).toBe(200);
+      expect(response.body.status).toBe('success');
       expect(response.body.message).toBe('Access granted');
 
-      jest.spyOn(global.Date, 'now').mockRestore();
+      resetDate();
     });
   });
 });
