@@ -7,13 +7,13 @@ import * as bcrypt from 'bcryptjs';
 import { ParkingService } from '../src/services/parking.service';
 import { ParkingRepository } from '../src/repositories/parking.repository';
 import request from 'supertest';
-import app from '../src/server';
+import app from '../src/app';
 
 export async function initializeTestDB() {
   if (!AppDataSource.isInitialized) {
     await AppDataSource.initialize();
   }
-  await AppDataSource.synchronize(true); // Borra y crea de nuevo
+  await AppDataSource.synchronize(true);
 }
 
 export async function createUser(
@@ -31,7 +31,7 @@ export async function createUser(
   });
   await userRepo.save(user);
 
-  // Autenticamos al usuario para obtener el token
+  // User authentication
   const loginRes = await request(app)
     .post('/auth/login')
     .send({ username: username, password: password });
@@ -56,9 +56,10 @@ export async function createParking(name: string, contact: string, spots: number
 }
 
 export function mockDate(dateStr: string) {
-  jest.useFakeTimers().setSystemTime(new Date(dateStr));
+  const mockDate = new Date(dateStr);
+  jest.spyOn(global.Date, 'now').mockImplementation(() => mockDate.getTime());
 }
 
 export function resetDate() {
-  jest.useRealTimers();
+  jest.spyOn(global.Date, 'now').mockRestore();
 }
