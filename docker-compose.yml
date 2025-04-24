@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/app  # Montamos todo el proyecto en /app dentro del contenedor
+      - .:/app
 
   db:
     image: postgres:13-alpine

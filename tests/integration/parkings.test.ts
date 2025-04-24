@@ -103,5 +103,21 @@ describe('Integration test for Provider user', () => {
       expect(response.body.status).toBe('error');
       expect(response.body.message).toContain('"spots" must be less than or equal to 1500');
     });
+
+    it('❌ Should NOT allow the creation of a parking with a non-existent type', async () => {
+      const response = await request(app)
+          .post('/parkings')
+          .set('Authorization', `Bearer ${providerToken}`)
+          .send({
+              name: `${parkingName}2000`,
+              spots: 300,
+              contact: '3331234567',
+              parkingType: 'newType',
+          });
+
+      expect(response.status).toBe(400);
+      expect(response.body.status).toBe('error');
+      expect(response.body.message).toContain('"parkingType" must be one of [public, private, courtesy]');
+    });
   });
 });
