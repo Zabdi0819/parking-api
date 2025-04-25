@@ -61,8 +61,8 @@ docker-compose up --build
 | /parkings/:id           | PATCH  | Update parking (contact/spots only) | Yes           |
 | /check-in               | POST   | Validate parking access             | Yes           |
 
-### Tests
-# Run tests one by one or with the test command
+# Tests
+### Run tests one by one or with the test command
 
 ```bash
 npm run test
