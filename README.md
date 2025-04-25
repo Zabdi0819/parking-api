@@ -47,6 +47,9 @@ cp .env.example .env
 
 # Build and start containers
 docker-compose up --build
+
+# Run migrations
+npx typeorm-ts-node-commonjs migration:run -d src/config/data-source.ts
 ```
 
 ## 📚 API Documentation
