@@ -39,7 +39,7 @@ describe('Get Parkings', () => {
       const response = await request(app)
         .get('/parkings')
         .set('Authorization', `Bearer ${usertoken}`)
-        .query({ skip: 2, limit: 10, order: 'DESC', orderBy: 'name' });
+        .query({ skip: 1, limit: 2, order: 'DESC', orderBy: 'name' });
 
         console.log("Result: ", response.body.data);
 
