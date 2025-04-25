@@ -1,4 +1,3 @@
-// test/utils.ts
 import AppDataSource from '../src/config/data-source';
 import { User } from '../src/entities/user.entity';
 import { UserType } from '../src/entities/checkin.entity';
@@ -13,7 +12,7 @@ export async function initializeTestDB() {
   if (!AppDataSource.isInitialized) {
     await AppDataSource.initialize();
   }
-  await AppDataSource.synchronize(true);
+  // await AppDataSource.synchronize(true);
 }
 
 export async function createUser(
