@@ -107,5 +107,18 @@ describe('Integration test for Visitor user', () => {
 
       resetDate();
     });
+
+    it('❌ Should NOT allow VISITOR user to check-in in a parking not found', async () => {
+      const response = await request(app)
+        .post('/check-in')
+        .set('Authorization', `Bearer ${VisitorToken}`)
+        .send({
+          parkingId: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+          userType: UserType.CORPORATE,
+        });
+
+      expect(response.status).toBe(500);
+      expect(response.body.message).toBe('Parking not found');
+    });
   });
 });

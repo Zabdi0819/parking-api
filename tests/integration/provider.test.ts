@@ -86,5 +86,18 @@ describe('Integration test for Provider user', () => {
       expect(response.body.errorCode).toBe('ACCESS_DENIED');
       expect(response.body.message).toBe('Only visitors can enter courtesy parkings');
     });
+
+    it('❌ Should NOT allow PROVIDER user to check-in in a parking not found', async () => {
+      const response = await request(app)
+        .post('/check-in')
+        .set('Authorization', `Bearer ${providerToken}`)
+        .send({
+          parkingId: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+          userType: UserType.CORPORATE,
+        });
+
+      expect(response.status).toBe(500);
+      expect(response.body.message).toBe('Parking not found');
+    });
   });
 });
