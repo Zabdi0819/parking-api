@@ -72,7 +72,7 @@ npm run test
 
 npm run test auth.test
 
-npm run test parkings.test
+npm run test integration/parkings.test
 
 npm run test integration/allparkings.test
 
