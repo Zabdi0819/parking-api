@@ -53,10 +53,38 @@ docker-compose up --build
 
 ### Endpoints
 
-| Endpoint                       | Method | Description                         | Auth Required |
-|--------------------------------|--------|-------------------------------------|---------------|
-| /api/v1/auth/login             | POST   | Get JWT token                       | No            |
-| /api/v1/parkings               | GET    | List parkings (paginated)           | Yes           |
-| /api/v1/parkings               | POST   | Create new parking                  | Yes           |
-| /api/v1/parkings/:id           | PATCH  | Update parking (contact/spots only) | Yes           |
-| /api/v1/check-in               | POST   | Validate parking access             | Yes           |
+| Endpoint                | Method | Description                         | Auth Required |
+|-------------------------|--------|-------------------------------------|---------------|
+| /auth/login             | POST   | Get JWT token                       | No            |
+| /parkings               | GET    | List parkings (paginated)           | Yes           |
+| /parkings               | POST   | Create new parking                  | Yes           |
+| /parkings/:id           | PATCH  | Update parking (contact/spots only) | Yes           |
+| /check-in               | POST   | Validate parking access             | Yes           |
+
+### Tests
+# Run tests one by one or with the test command
+
+```bash
+npm run test
+
+npm run test auth.test
+
+npm run test parkings.test
+
+npm run test integration/allparkings.test
+
+npm run test integration/corporate.test
+
+npm run test integration/provider.test
+
+npm run test integration/visitor.test
+
+npm run test unit/corporate.test
+
+npm run test unit/provider.test
+
+npm run test unit/visitor.test
+```
+
+### Developed by Zabdi Ramírez
+
